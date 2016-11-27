@@ -1,0 +1,134 @@
+-- MySQL dump 10.13  Distrib 5.5.53, for Win32 (AMD64)
+--
+-- Host: localhost    Database: IRCTC
+-- ------------------------------------------------------
+-- Server version	5.5.53
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `availability`
+--
+
+DROP TABLE IF EXISTS `availability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `availability` (
+  `A_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `seats` int(50) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`A_id`),
+  KEY `id` (`id`),
+  CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`id`) REFERENCES `route_mapping` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `availability`
+--
+
+LOCK TABLES `availability` WRITE;
+/*!40000 ALTER TABLE `availability` DISABLE KEYS */;
+INSERT INTO `availability` VALUES (1,1,10,'2016-11-28'),(2,2,65,'2016-11-29'),(3,3,150,'2016-12-01'),(4,4,230,'2016-12-01'),(5,5,120,'2016-12-02'),(6,6,9,'2016-12-02'),(7,7,45,'2016-12-02'),(8,8,76,'2016-12-03'),(9,9,3,'2016-11-28'),(10,10,32,'2016-11-28'),(11,11,12,'2016-11-28'),(12,12,78,'2016-11-29'),(13,13,88,'2016-12-01'),(14,14,198,'2016-12-05'),(15,15,90,'2016-12-05'),(16,16,143,'2016-12-05'),(17,17,235,'2016-12-03'),(18,18,123,'2016-12-03'),(19,19,211,'2016-12-01'),(20,20,77,'2016-12-01'),(21,21,4,'2016-12-02'),(22,22,71,'2016-12-02'),(23,23,2,'2016-12-03'),(24,24,20,'2016-12-01');
+/*!40000 ALTER TABLE `availability` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `route`
+--
+
+DROP TABLE IF EXISTS `route`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `route` (
+  `route_id` int(11) NOT NULL,
+  `source` varchar(100) DEFAULT NULL,
+  `destination` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`route_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `route`
+--
+
+LOCK TABLES `route` WRITE;
+/*!40000 ALTER TABLE `route` DISABLE KEYS */;
+INSERT INTO `route` VALUES (1,'New Delhi','Bhopal'),(2,'Pune','New Delhi'),(3,'Chennai','New Delhi'),(4,'Mumbai','Kolkata'),(5,'Jaipur','New Delhi'),(6,'Kochi','Bangalore'),(7,'Hyderabad','Bangalore'),(8,'Kolkata','New Delhi'),(9,'Bhopal','Jaipur'),(10,'New Delhi','Mumbai'),(11,'Kolkata','Mumbai'),(12,'New Delhi','Pune'),(14,'Mumbai','New Delhi'),(15,'Pune','Mumbai'),(16,'Chennai','Mumbai'),(17,'New Delhi','Kolkata'),(19,'New Delhi','Amritsar'),(20,'New Delhi','Kochi'),(21,'New Delhi','Lucknow'),(22,'Bhopal','New Delhi'),(24,'Amritsar','Kolktta');
+/*!40000 ALTER TABLE `route` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `route_mapping`
+--
+
+DROP TABLE IF EXISTS `route_mapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `route_mapping` (
+  `id` int(11) NOT NULL,
+  `train_id` int(11) NOT NULL,
+  `route_id` int(11) NOT NULL,
+  `days` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `train_id` (`train_id`),
+  KEY `route_id` (`route_id`),
+  CONSTRAINT `route_mapping_ibfk_1` FOREIGN KEY (`train_id`) REFERENCES `train` (`train_id`),
+  CONSTRAINT `route_mapping_ibfk_2` FOREIGN KEY (`route_id`) REFERENCES `route` (`route_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `route_mapping`
+--
+
+LOCK TABLES `route_mapping` WRITE;
+/*!40000 ALTER TABLE `route_mapping` DISABLE KEYS */;
+INSERT INTO `route_mapping` VALUES (1,22879,10,'mon,tues'),(2,22409,10,'mon,fri'),(3,21209,11,'mon,tues,wed'),(4,28759,11,'tues,wed'),(5,22406,12,'tues,wed,thus'),(6,28759,14,'tues,wed,fri,sat'),(7,276449,14,'tues,wed,fri,sat'),(8,28759,15,'tues,wed,fri'),(9,22209,15,'tues,wed,fri,sat'),(10,212349,16,'wed,fri,sat'),(11,28759,16,'wed,fri,sat,sun'),(12,21209,17,'wed,fri,sun'),(13,22309,17,'mon,wed,fri,sun'),(14,22308,19,'mon,wed'),(15,276449,19,'mon,thus'),(16,22209,20,'mon,thus,fri'),(17,22406,20,'thus,fri'),(18,22409,11,'thus,sun'),(19,22409,21,'sun'),(20,22309,21,'tues'),(21,276449,22,'wed'),(22,24409,22,'fri'),(23,22308,24,'mon,fri'),(24,20009,24,'sat');
+/*!40000 ALTER TABLE `route_mapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `train`
+--
+
+DROP TABLE IF EXISTS `train`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `train` (
+  `train_id` int(11) NOT NULL,
+  `train_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`train_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `train`
+--
+
+LOCK TABLES `train` WRITE;
+/*!40000 ALTER TABLE `train` DISABLE KEYS */;
+INSERT INTO `train` VALUES (20009,'Jaipur Express'),(21209,'Kolkatta Express'),(22209,'Shatabdi'),(22308,'Punjab Express'),(22309,'Rajdhani'),(22406,'Anvt Bgp G Rath'),(22409,'Anvt Garib Rath'),(22879,'Delhi Express'),(24409,'Bangalore Express'),(28759,'Mumbai Express'),(212349,'Chennai Express'),(276449,'SpecialRajdhani');
+/*!40000 ALTER TABLE `train` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-12-02 23:17:29
